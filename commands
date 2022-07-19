@@ -1,0 +1,12 @@
+docker exec -it --user root <container> bash
+docker cp mysql-connector-java-8.0.29.jar nova-versao_connect_1:/usr/share/confluent-hub-components/confluentinc-kafka-connect-jdbc/lib
+  
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic docker-connect-offsets --config "cleanup.policy=compact"
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic docker-connect-configs --config "cleanup.policy=compact"
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --create --topic docker-connect-status --config "cleanup.policy=compact"
+
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --delete --topic docker-connect-offsets
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --delete --topic docker-connect-configs
+docker exec kafka kafka-topics --bootstrap-server kafka:9092 --delete --topic docker-connect-status
+
+docker exec --interactive --tty kafka kafka-console-consumer --bootstrap-server brkafkaoker:9092 --topic test-mysql-jdbc-kafka-table --from-beginning
