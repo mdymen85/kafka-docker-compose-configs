@@ -54,19 +54,6 @@ services:
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_ZOOKEEPER_CONNECT: "zookeeper:2181"
       
-  mysql-connect:
-    container_name: mysql-connect
-    image: mysql:5.7
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=mdymen_pass
-    volumes:
-      - "./src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql"
-    networks:
-      - network-backend
-      
   postgres-connect:
     container_name: postgres-connect
     image: postgres:12.7-alpine

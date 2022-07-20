@@ -1,0 +1,30 @@
+curl --location --request POST 'localhost:8083/connectors' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "test-source-postgres-jdbc",
+    "config" {
+       "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+       "tasks.max":"1",
+       "connection.url":"jdbc:postgresql://postgres-connect:5432/kafka-test?allowPublicKeyRetrieval=true&autoReconnect=true&user=root&password=mdymen_pass",
+       "mode":"incrementing",
+       "incrementing.column.name":"id",
+       "topic.prefix":"test-postgres-jdbc-",
+       "table.whitelist":"kafka-table"
+    }
+}'
+
+curl --location --request PUT 'localhost:8083/connectors/test-source-mysql-jdbc-autoincremen/config' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+    "tasks.max":"1",
+    "connection.url":"jdbc:postgresql://postgres-connect:5432/kafka-test?allowPublicKeyRetrieval=true&autoReconnect=true&user=root&password=mdymen_pass",
+    "mode":"incrementing",
+    "incrementing.column.name":"id",
+    "topic.prefix":"test-postgres-jdbc-",
+    "table.whitelist":"kafka-table"
+}'
+
+
+
+
